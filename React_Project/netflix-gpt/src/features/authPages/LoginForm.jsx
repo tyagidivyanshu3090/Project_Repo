@@ -30,7 +30,7 @@ const LoginForm = () => {
         <input
           type="password"
           placeholder="Password"
-          className="rounded bg-gray-700 p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          className="rounded bg-gray-700 p-3 text-white placeholder-gray-400 "
         />
 
         {/* Sign In Button */}
