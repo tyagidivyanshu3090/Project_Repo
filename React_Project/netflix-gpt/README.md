@@ -10,3 +10,5 @@ npm run dev -- --host
 ## Project Folder structure:
 
 - All the routing is defined inside the `src/route/AppRoute.jsx`
+- utils folder:
+    - validate.js: for regex testing at Login time

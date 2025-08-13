@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { validateData } from "../../utils/loginValidate";
 
 const AuthForm = () => {
   // RENAMED: 'formState' to 'isLoginMode' for better clarity.
   // 'true' means the Login form is active, 'false' means Sign Up is active.
   const [isLoginMode, setIsLoginMode] = useState(true);
 
+  const email = useRef("");
+  const password = useRef("");
+
   // RENAMED: Corrected typo "Hanlder" to "Handler" and made the name more specific.
   const toggleAuthModeHandler = () => {
     setIsLoginMode((prevMode) => !prevMode); // Using a function ensures we get the latest state
   };
-
+  const submitFormHandler = (e) => {
+    e.preventDefault();
+    const response = validate
+  };
   return (
     // Main container to center the form on the page
     <div className="flex h-screen items-center justify-center ">
       {/* Form container with Netflix styling */}
       <form
         // Using onSubmit to prevent default browser form submission behavior
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={submitFormHandler}
         className="flex w-full max-w-md flex-col gap-4 rounded bg-black/70 p-16"
       >
         <h1 className="mb-4 text-3xl font-bold text-white">
@@ -36,12 +43,14 @@ const AuthForm = () => {
 
         <input
           type="email" // Using type="email" for better validation
+          ref={email}
           placeholder="Email or phone number"
           className="rounded bg-gray-700 p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
         />
 
         <input
           type="password"
+          ref={password}
           placeholder="Password"
           className="rounded bg-gray-700 p-3 text-white placeholder-gray-400"
         />
