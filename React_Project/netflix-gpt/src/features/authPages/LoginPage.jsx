@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../../components/Header";
-import LoginForm from "./LoginForm";
+import AuthForm from "./AuthForm";
 
 const Login = () => {
   const backgroundImageUrl =
@@ -19,7 +19,7 @@ const Login = () => {
     >
       <Header />
       {/* Your login form will go here */}
-      <LoginForm />
+      <AuthForm />
     </div>
   );
 };
