@@ -38,6 +38,11 @@ const AuthForm = () => {
         onSubmit={submitFormHandler}
         className="flex w-full max-w-md flex-col gap-4 rounded bg-black/70 p-16"
       >
+        <p className="text-xs text-gray-400 mt-4 text-center">
+          <span className="font-bold">Disclaimer:</span> This is a personal
+          portfolio project for educational purposes and is not affiliated with
+          Netflix.
+        </p>
         {/* Heading for Login and Sing up */}
         <h1 className="mb-4 text-3xl font-bold text-white">
           {isLoginMode ? "Login" : "Sign Up"}
