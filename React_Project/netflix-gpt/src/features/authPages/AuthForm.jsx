@@ -11,6 +11,9 @@ const AuthForm = () => {
   const email = useRef("");
   const password = useRef("");
 
+  // 1. CREATE the ref for the name input
+  const name = useRef("");
+
   // RENAMED: Corrected typo "Hanlder" to "Handler" and made the name more specific.
   const toggleAuthModeHandler = () => {
     setIsLoginMode((prevMode) => !prevMode); // Using a function ensures we get the latest state
@@ -20,7 +23,9 @@ const AuthForm = () => {
     e.preventDefault();
     const validationError = validateData(
       email.current.value,
-      password.current.value
+      password.current.value,
+      // Pass the name value ONLY if we are in Sign Up mode
+      isLoginMode ? null : name.current.value
     );
     setError(validationError);
   };
@@ -53,6 +58,7 @@ const AuthForm = () => {
         {!isLoginMode && (
           <input
             type="text"
+            ref={name}
             placeholder="Your Name"
             className="rounded bg-gray-700 p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
           />
