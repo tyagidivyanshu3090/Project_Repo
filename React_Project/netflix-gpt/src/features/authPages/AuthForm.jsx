@@ -6,6 +6,7 @@ const AuthForm = () => {
   // RENAMED: 'formState' to 'isLoginMode' for better clarity.
   // 'true' means the Login form is active, 'false' means Sign Up is active.
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [error, setError] = useState("");
 
   const email = useRef("");
   const password = useRef("");
@@ -14,9 +15,14 @@ const AuthForm = () => {
   const toggleAuthModeHandler = () => {
     setIsLoginMode((prevMode) => !prevMode); // Using a function ensures we get the latest state
   };
+
   const submitFormHandler = (e) => {
     e.preventDefault();
-    const response = validate
+    const validationError = validateData(
+      email.current.value,
+      password.current.value
+    );
+    setError(validationError);
   };
   return (
     // Main container to center the form on the page
@@ -27,10 +33,21 @@ const AuthForm = () => {
         onSubmit={submitFormHandler}
         className="flex w-full max-w-md flex-col gap-4 rounded bg-black/70 p-16"
       >
+        {/* Heading for Login and Sing up */}
         <h1 className="mb-4 text-3xl font-bold text-white">
-          {/* CORRECTED: Text now dynamically changes */}
           {isLoginMode ? "Login" : "Sign Up"}
         </h1>
+
+        {/* Logging the error */}
+        {error && (
+          <div
+            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md relative"
+            role="alert"
+          >
+            <strong className="font-bold">Error: </strong>
+            <span className="block sm:inline">{error}</span>
+          </div>
+        )}
 
         {/* This input for the user's name will only appear in "Sign Up" mode */}
         {!isLoginMode && (
