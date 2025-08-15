@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { validateData } from "../../utils/loginValidate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../utils/firebase";
 
 const AuthForm = () => {
   // RENAMED: 'formState' to 'isLoginMode' for better clarity.
@@ -19,16 +24,57 @@ const AuthForm = () => {
     setIsLoginMode((prevMode) => !prevMode); // Using a function ensures we get the latest state
   };
 
-  const submitFormHandler = (e) => {
+  // * -------------------------------************************************----------------------
+  /*
+    ~ The validateData is an inhouse function which check whether email, password and name are valid or not -> Regex
+    ^ createUserWithEmailAndPassword(): is firebase asynchronous function which return the object. used for signUP
+    ! signInWithEmailAndPassword(): is firebase asynchronous function which is used for Login or signIn
+  */
+  const submitFormHandler = async (e) => {
     e.preventDefault();
     const validationError = validateData(
       email.current.value,
       password.current.value,
-      // Pass the name value ONLY if we are in Sign Up mode
       isLoginMode ? null : name.current.value
     );
+
+    // If validation passes, clear previous errors and proceed
     setError(validationError);
+    if (validationError) return;
+
+    // Use a try...catch block for the async operation
+    try {
+      if (isLoginMode) {
+        const userSignIn = await signInWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        );
+        console.log("The fireBase result is ", userSignIn);
+      } else {
+        // Only create a user in "Sign Up" mode
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        );
+        console.log(userCredential);
+        // The user is created and signed in
+        // const user = userCredential.user;
+        // console.log("User created:", user);
+      }
+    } catch (error) {
+      // console.log(error);
+      // 🔍 Log the specific properties of the Firebase error object
+      // console.error("Firebase Auth Error Code:", error.code);
+      // console.error("Firebase Auth Error Message:", error.message);
+
+      // You can still log the full object to inspect it
+      console.error("Full Firebase Error Object:", error);
+    }
   };
+  // *  -------------------------------************************************----------------------
+
   return (
     // Main container to center the form on the page
     <div className="flex h-screen items-center justify-center ">

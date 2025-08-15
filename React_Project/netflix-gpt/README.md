@@ -9,8 +9,10 @@ npm run dev -- --host
 ## Project Folder structure:
 
 - All the routing is defined inside the `src/route/AppRoute.jsx`
-- utils folder:
-  - validate.js: for regex testing at Login time
+- `utils folder`:
+  - **validate.js**: for regex testing at Login time [ email, password and name]
+  - **firebase.js**: file for saving the configuration of firebase
+  - **.env**: save the key of firebase and to access it we use process.env.{KEY_NAME}
 
 ## Understanding the Flavours of .env file
 
@@ -18,3 +20,5 @@ npm run dev -- --host
 - `.env.local` → Local overrides, not committed to Git (good for secrets in development).
 - `.env.production` → For production build.
 - `.env.development` → For dev build.
+
+##
