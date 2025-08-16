@@ -22,3 +22,9 @@ npm run dev -- --host
 - `.env.development` → For dev build.
 
 ##
+
+# Redux:
+
+- Install 2 libraries: react-redux and toolkit
+- Steps:
+  - 1. Create a store using configureStore [ appStore.js ]

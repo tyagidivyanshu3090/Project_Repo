@@ -24,5 +24,5 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Export the auth service so you can use it elsewhere
+// Instance for all firebase authentication Operation
 export const auth = getAuth(app);
