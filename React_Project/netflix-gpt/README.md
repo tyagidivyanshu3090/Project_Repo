@@ -29,3 +29,5 @@ npm run dev -- --host
 - Steps:
   - 1. Create a store using configureStore [ appStore.js ]
   - 2. Provide the store to the application -> [ App.js ]
+
+Q: It automatically triggers a callback function whenever: A user signs dont want to implement full logic now just want to see the console log -> this console.log("User is authenticated:", user?.email); then i will dispatch the code. + I Have never called the onAuthStateChanged. how it is called and it is linked to createUserWithEmailAndPassword and signInWithEmailAndPassword internally >p. A user signs in. A user signs out. The page is reloaded, and Firebase checks if a user was previously signed in. This makes it the perfect, centralized place to manage your user's state in Redux.

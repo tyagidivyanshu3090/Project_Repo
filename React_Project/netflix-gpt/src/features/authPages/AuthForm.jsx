@@ -32,6 +32,7 @@ const AuthForm = () => {
   */
   const submitFormHandler = async (e) => {
     e.preventDefault();
+    console.log(password.current.value);
     const validationError = validateData(
       email.current.value,
       password.current.value,
