@@ -28,3 +28,4 @@ npm run dev -- --host
 - Install 2 libraries: react-redux and toolkit
 - Steps:
   - 1. Create a store using configureStore [ appStore.js ]
+  - 2. Provide the store to the application -> [ App.js ]
