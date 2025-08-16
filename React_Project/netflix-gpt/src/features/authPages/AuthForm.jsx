@@ -6,8 +6,10 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = () => {
+  const navigate = useNavigate();
   // RENAMED: 'formState' to 'isLoginMode' for better clarity.
   // 'true' means the Login form is active, 'false' means Sign Up is active.
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -52,6 +54,7 @@ const AuthForm = () => {
           password.current.value
         );
         console.log("The fireBase result is ", userSignIn);
+        navigate("/dashboard"); // Navigate to the home page or any other page
       } else {
         // Only create a user in "Sign Up" mode
         const userCredential = await createUserWithEmailAndPassword(
