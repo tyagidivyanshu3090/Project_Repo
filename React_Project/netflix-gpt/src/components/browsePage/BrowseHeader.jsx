@@ -15,7 +15,8 @@ const BrowseHeader = () => {
     signOut(auth)
       .then(() => {
         // Dispatching is handled within the .then() block, which is correct.
-        dispatch(clearUser());
+        // dispatch(clearUser()); This dispatch is not needed here as we handle it in AppRoute.jsx inside the auth state change listener. [ onAuthStateChanged ]
+        console.log("User signed out successfully");
         navigate("/");
       })
       .catch((error) => {
