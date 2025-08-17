@@ -7,6 +7,9 @@ import {
 } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth"; // Importing updateProfile to update user profile after login
+import { useSelector } from "react-redux";
+import User_Avatar from "../../assets/User_Avatar.png"; // A placeholder user avatar
 
 const AuthForm = () => {
   const navigate = useNavigate();
@@ -20,6 +23,8 @@ const AuthForm = () => {
 
   // 1. CREATE the ref for the name input
   const name = useRef("");
+
+  // const selector = useSelector((state) => state.user);
 
   // RENAMED: Corrected typo "Hanlder" to "Handler" and made the name more specific.
   const toggleAuthModeHandler = () => {
@@ -53,8 +58,7 @@ const AuthForm = () => {
           email.current.value,
           password.current.value
         );
-        console.log("The fireBase result is ", userSignIn);
-        navigate("/dashboard"); // Navigate to the home page or any other page
+        navigate("/dashboard");
       } else {
         // Only create a user in "Sign Up" mode
         const userCredential = await createUserWithEmailAndPassword(
@@ -62,15 +66,25 @@ const AuthForm = () => {
           email.current.value,
           password.current.value
         );
+        updateProfile(userCredential.user, {
+          displayName: name.current.value, // Update displayName with the user's name
+        })
+          .then(() => {
+            navigate("/dashboard"); // Navigate to the home page or any other page
+          })
+          .catch((err) => {
+            setError("Failed to update profile. Please try again.");
+            console.error("Error updating profile:", err);
+          });
         console.log(userCredential);
       }
-    } catch (error) {
+    } catch (err) {
       // 🔍 Log the specific properties of the Firebase error object
       // console.error("Firebase Auth Error Code:", error.code);
       // console.error("Firebase Auth Error Message:", error.message);
 
       // You can still log the full object to inspect it
-      console.error("Full Firebase Error Object:", error);
+      console.error("Full Firebase Error Object:", err);
     }
   };
   // *  -------------------------------************************************----------------------

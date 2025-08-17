@@ -3,12 +3,12 @@ import NetFlix_Logo from "../../assets/Netflix_Logo.png";
 import User_Avatar from "../../assets/User_Avatar.png"; // A placeholder user avatar
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
-import { useDispatch } from "react-redux";
-import { clearUser } from "../../utils/redux-store/slice/UserSlice";
+// import { useDispatch } from "react-redux";
+// import { clearUser } from "../../utils/redux-store/slice/UserSlice";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const BrowseHeader = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate(); // Assuming you have useNavigate imported from react-router-dom
 
   const signOutHandler = () => {
