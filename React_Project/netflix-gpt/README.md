@@ -28,6 +28,8 @@ npm run dev -- --host
 - Install 2 libraries: react-redux and toolkit
 - Steps:
   - 1. Create a store using configureStore [ appStore.js ]
-  - 2. Provide the store to the application -> [ App.js ]
-
-
+  - 2. Provide the store to the application -> [ App.js ] `<Provider store={store_Name}>`
+  - 3. Create a slice using createSlice [ UserSlice.js ]
+    - Export all the action of the slice as named export and
+    - Export all reducers function as a single reducer function [ default export ]
+  - 4. import the reducer function created in slice into the store [ appStore.js ]

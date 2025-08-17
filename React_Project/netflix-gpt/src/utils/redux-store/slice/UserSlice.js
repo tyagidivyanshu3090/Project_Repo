@@ -4,16 +4,17 @@ const userSlice = createSlice({
   initialState: null,
   reducers: {
     setUser: (state, action) => {
-      return action.payload;
+      console.log("Setting user in redux slice is:", action.payload);
+      return action.payload; // Update the state with the user data
     },
     clearUser: () => {
-      return null;
+      return null; // Clear the user state
     },
   },
 });
 
 export const { setUser, clearUser } = userSlice.actions;
-export default userSlice.reducer;
+export default userSlice.reducer; // This will be used in the store [ it is default export so we can import it as userReducer @ Having different name in appStore.js ]
 
 // Selector to access user state
 export const selectUser = (state) => state.user; // Selector to access user state

@@ -1,5 +1,5 @@
 import React from "react";
-import NetFlix_Logo from "../assets/NetFlix_Logo.png";
+import NetFlix_Logo from "../../assets/Netflix_Logo.png";
 
 const Header = () => {
   return (
@@ -10,7 +10,6 @@ const Header = () => {
     // - `flex items-center justify-between`: The core layout; creates a flex row, vertically centers items, and pushes the logo and actions apart
     // - `p-4 sm:p-6`: Adds padding, which is larger on bigger screens (sm:)
     <header className="absolute z-10 w-full flex items-center justify-between p-4 sm:p-6">
-     
       {/* - `w-24 sm:w-36`: Sets the width of the logo, making it larger on bigger screens */}
       <img className="w-24 sm:w-36" src={NetFlix_Logo} alt="Netflix Logo" />
 

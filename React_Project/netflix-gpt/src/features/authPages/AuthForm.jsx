@@ -63,12 +63,8 @@ const AuthForm = () => {
           password.current.value
         );
         console.log(userCredential);
-        // The user is created and signed in
-        // const user = userCredential.user;
-        // console.log("User created:", user);
       }
     } catch (error) {
-      // console.log(error);
       // 🔍 Log the specific properties of the Firebase error object
       // console.error("Firebase Auth Error Code:", error.code);
       // console.error("Firebase Auth Error Message:", error.message);
