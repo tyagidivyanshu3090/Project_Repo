@@ -28,6 +28,11 @@ function showSuccess(inputElement) {
   formControl.className = "form-control success";
 }
 
+function isValidEmail(email) {
+  const mailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  return mailRegex.test(email);
+}
+
 //  Applying the event listerner to the form tag
 form.addEventListener("submit", (e) => {
   e.preventDefault(); // Prevent the form from submitting in the default way (which would cause a page reload).
@@ -36,5 +41,13 @@ form.addEventListener("submit", (e) => {
     showError(username, "Username is required");
   } else {
     showSuccess(username);
+  }
+
+  if (email.value === "") {
+    showError(email, "email is required");
+  } else if (!isValidEmail(email.value)) {
+    showError(email, "email is not valid");
+  } else {
+    showSuccess(email);
   }
 });
