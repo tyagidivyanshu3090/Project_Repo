@@ -5,6 +5,12 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const password2 = document.getElementById("password2");
 
+// --- UTILITY FUNCTIONS ---
+/**
+ * Displays an error message and applies error styling to an input field.
+ * @param {HTMLElement} inputElement - The input element that has an error.
+ * @param {string} message - The error message to display.
+ */
 function showError(inputElement, message) {
   // Get the parent div, which is the '.form-control' element
   const formControl = inputElement.parentElement;
@@ -17,15 +23,14 @@ function showError(inputElement, message) {
   small.innerText = message;
 }
 
-
-function showSuccess(inputElement){
-    const formControl = inputElement.parentElement;
-    formControl.className = 'form-control success'
+function showSuccess(inputElement) {
+  const formControl = inputElement.parentElement;
+  formControl.className = "form-control success";
 }
 
 //  Applying the event listerner to the form tag
 form.addEventListener("submit", (e) => {
-  e.preventDefault();
+  e.preventDefault(); // Prevent the form from submitting in the default way (which would cause a page reload).
   if (username.value === "") {
     // Calling the function -> Defining above
     showError(username, "Username is required");
