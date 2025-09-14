@@ -12,3 +12,5 @@
 ```js 
 npm i -d nodemon
 ```
+
+## Testing GIT application
