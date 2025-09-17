@@ -1,18 +1,12 @@
 const express = require("express");
+const { checkAuth } = require("./middleware/auth");
 
 const app = express(); //  Creating the instance of express server -> app server
 
 const PORT = 3000;
 
 // Middleware
-app.use("/devtinder", (req, res, next) => {
-  const token = "xyz";
-  if (token !== "xyz") {
-    res.send("Invalid token");
-  } else {
-    next();
-  }
-});
+app.use("/devtinder", checkAuth);
 
 app.get("/devtinder/getuser", (req, res) => {
   res.send({
