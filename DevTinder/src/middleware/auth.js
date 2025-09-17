@@ -15,9 +15,15 @@ const checkAuth = (req, res, next) => {
   next();
 };
 
+// user Auth function
+
+const userAuth = (req, res, next) => {
+  const token = "xyz";
+  if (token !== "xyz") {
+    return res.status(401).send("Unauthorized user");
+  }
+  next();
+};
+
 // This line makes the function available to other files in our project.
-module.exports = { checkAuth };
-
-
-
-
+module.exports = { checkAuth, userAuth };
