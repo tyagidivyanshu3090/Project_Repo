@@ -1,5 +1,5 @@
 const express = require("express");
-require("./config/databae");
+const connectToDB = require("./config/database");
 const { checkAuth, userAuth } = require("./middleware/auth");
 
 const app = express(); //  Creating the instance of express server -> app server
@@ -25,6 +25,12 @@ app.delete("/devtinder/deleteuser", (req, res) => {
   res.send("The user is deleted");
 });
 
-app.listen(PORT, (req, res) => {
-  console.log(`The server is running at port number ${PORT}`);
-});
+connectToDB()
+  .then(
+    app.listen(PORT, (req, res) => {
+      console.log(`The server is running at port number ${PORT}`);
+    })
+  )
+  .catch((err) => {
+    console.log("error received");
+  });

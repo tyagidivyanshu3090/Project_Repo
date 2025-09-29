@@ -7,4 +7,6 @@ async function connectToDB() {
   console.log("database connected");
 }
 
-connectToDB();
+// connectToDB();
+
+module.exports = connectToDB; // "Here is a function for other files to use."
