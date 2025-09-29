@@ -1,4 +1,5 @@
 const express = require("express");
+require("./config/databae");
 const { checkAuth, userAuth } = require("./middleware/auth");
 
 const app = express(); //  Creating the instance of express server -> app server
