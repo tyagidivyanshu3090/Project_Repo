@@ -8,6 +8,7 @@ const PORT = 3000;
 
 connectToDB()
   .then(() => {
+    console.log("database connected");
     app.listen(PORT, (req, res) => {
       console.log(`The server is running at port number ${PORT}`);
     });
