@@ -13,7 +13,15 @@ app.use(express.json());
 app.post("/signup", async (req, res) => {
   // Console loging the request -> body
   console.log("the request body data send is -> ", req.body);
-  res.send("Data saved to database");
+
+  try {
+    // Creating the instance of modal for saving data in database
+    const User = new UserModel(req.body);
+    await User.save();
+    res.send("Data saved to DB");
+  } catch (err) {
+    res.status(400).send("Error in saving the data", err.message);
+  }
 });
 
 connectToDB()
