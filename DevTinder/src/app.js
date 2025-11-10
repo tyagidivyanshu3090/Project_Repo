@@ -8,16 +8,11 @@ const app = express(); //  Creating the instance of express server -> app server
 
 const PORT = 3000;
 
+app.use(express.json());
+
 app.post("/signup", async (req, res) => {
-  const userObj = {
-    firstName: "Divyanshu",
-    lastName: "Tyagi",
-    emailId: "divyanshu422@gmail.com",
-    password: "abcd@1234",
-  };
-  // Creating the instance of userModal
-  const user = new UserModel(userObj);
-  await user.save();
+  // Console loging the request -> body
+  console.log("the request body data send is -> ", req.body);
   res.send("Data saved to database");
 });
 
