@@ -39,7 +39,10 @@ app.get("/user", async (req, res) => {
   const userEmail = req.body.emailId;
   try {
     const user = await UserModel.findOne({ emailId: userEmail });
-    console.log(user);
+    // 3. Handle case where user is not found
+    if (!user) {
+      return res.status(404).send("User Dont exist");
+    }
     res.status(200).json(user); // Sending the data to frontend
   } catch (err) {
     res.status(500).send("Something went wrong");
