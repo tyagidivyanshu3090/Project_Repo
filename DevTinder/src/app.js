@@ -39,11 +39,22 @@ app.get("/user", async (req, res) => {
   const userEmail = req.body.emailId;
   try {
     const user = await UserModel.findOne({ emailId: userEmail });
+
     // 3. Handle case where user is not found
     if (!user) {
       return res.status(404).send("User Dont exist");
     }
-    res.status(200).json(user); // Sending the data to frontend
+    res.status(200).json(user); // Sending the data to frsesontend
+  } catch (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
+
+app.get("/userbyid", async (req, res) => {
+  const UserById = req.body.userById;
+  try {
+    const user = await UserModel.findById(UserById);
+    res.status(200).send(user);
   } catch (err) {
     res.status(500).send("Something went wrong");
   }
