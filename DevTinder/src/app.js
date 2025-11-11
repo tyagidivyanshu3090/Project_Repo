@@ -24,6 +24,28 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Sending all data to frontend
+app.get("/feed", async (req, res) => {
+  try {
+    const allUsers = await UserModel.find({});
+    res.send(allUsers); // res.json(allUsers)
+  } catch (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
+
+// Sending Single data to frontend based on emailID
+app.get("/user", async (req, res) => {
+  const userEmail = req.body.emailId;
+  try {
+    const user = await UserModel.findOne({ emailId: userEmail });
+    console.log(user);
+    res.status(200).json(user); // Sending the data to frontend
+  } catch (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
+
 connectToDB()
   .then(() => {
     console.log("database connected");
