@@ -67,7 +67,11 @@ app.delete("/deleteuser", async (req, res) => {
   console.log(userId);
   try {
     const user = await UserModel.findByIdAndDelete(userId);
-    // console.log(user);
+    // 4. Check if a user was actually found and deleted
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    // 5. Send success message
     res.status(200).send("User deleted successfully");
   } catch (err) {
     res.status(500).send("Server error");
