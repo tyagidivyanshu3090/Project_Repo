@@ -20,7 +20,10 @@ app.post("/signup", async (req, res) => {
     await User.save();
     res.send("Data saved to DB");
   } catch (err) {
-    res.status(400).send("Error in saving the data", err.message);
+    console.log(err);
+    res
+      .status(400)
+      .send({ message: "Error in saving the data", error: err.message });
   }
 });
 
