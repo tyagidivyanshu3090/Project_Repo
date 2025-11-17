@@ -10,6 +10,7 @@ const PORT = 3000;
 
 app.use(express.json());
 
+// adding the user
 app.post("/signup", async (req, res) => {
   // Console loging the request -> body
   console.log("the request body data send is -> ", req.body);
@@ -81,15 +82,19 @@ app.delete("/deleteuser", async (req, res) => {
   }
 });
 
+// Updating the user
 app.patch("/updateuser", async (req, res) => {
   const userId = req.body.userById;
   const data = req.body;
   console.log(userId, data);
   try {
-    const user = await UserModel.findByIdAndUpdate(userId, data);
+    const user = await UserModel.findByIdAndUpdate(userId, data, {
+      new: true, // This returns the *new* updated document
+      runValidators: true,
+    });
     res.status(200).send("User Updated successfully");
   } catch (err) {
-    res.status(500).send("Server error");
+    res.status(500).send("Server error" + err.message);
   }
 });
 
