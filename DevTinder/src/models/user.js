@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+      validate(value) {
+        if (!validator.isStrongPassword(value)) {
+          throw new Error("Enter a strong Password: " + value);
+        }
+      },
     },
     emailId: {
       type: String,
