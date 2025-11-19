@@ -1,6 +1,7 @@
 const express = require("express");
 const connectToDB = require("./config/database");
 const { checkAuth, userAuth } = require("./middleware/auth");
+const signUpValidation = require("./utilsOrHelperFolder/signUpValidation");
 
 const { UserModel } = require("./models/user");
 
@@ -8,7 +9,7 @@ const app = express(); //  Creating the instance of express server -> app server
 
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json()); 
 
 // adding the user
 app.post("/signup", async (req, res) => {
@@ -16,6 +17,9 @@ app.post("/signup", async (req, res) => {
   console.log("the request body data send is -> ", req.body);
 
   try {
+    // Validation of data
+    signUpValidation(req);
+
     // Creating the instance of modal for saving data in database
     const User = new UserModel(req.body);
     await User.save();
