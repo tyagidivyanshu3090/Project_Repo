@@ -2,6 +2,7 @@ const express = require("express");
 const connectToDB = require("./config/database");
 const { checkAuth, userAuth } = require("./middleware/auth");
 const signUpValidation = require("./utilsOrHelperFolder/signUpValidation");
+const bcrypt = require("bcrypt");
 
 const { UserModel } = require("./models/user");
 
@@ -9,7 +10,7 @@ const app = express(); //  Creating the instance of express server -> app server
 
 const PORT = 3000;
 
-app.use(express.json()); 
+app.use(express.json());
 
 // adding the user
 app.post("/signup", async (req, res) => {
@@ -20,9 +21,19 @@ app.post("/signup", async (req, res) => {
     // Validation of data
     signUpValidation(req);
 
+    // Encrypting the password
+    const { firstName, lastName, emailId, password } = req.body;
+    const passwordHash = await bcrypt.hash(password, 10);
+
     // Creating the instance of modal for saving data in database
-    const User = new UserModel(req.body);
-    await User.save();
+    const user = new UserModel({
+      firstName,
+      lastName,
+      emailId,
+      password: passwordHash,
+    });
+
+    await user.save();
     res.send("Data saved to DB");
   } catch (err) {
     console.log(err);
