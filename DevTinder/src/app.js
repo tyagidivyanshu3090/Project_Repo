@@ -43,6 +43,30 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// login api -> check emailId and password is correct or not
+app.post("/login", async (req, res) => {
+  try {
+    // Extracting the emailId and password from the request body
+    const { emailId, password } = req.body;
+
+    // checking the user in datase
+    const user = await UserModel.findOne({ emailId: emailId });
+    // if user exist then checking password with hashed password otherwise return invalid credentials
+    if (!user) {
+      throw new Error("Invalid credential");
+    }
+    const isPasswordMatched = await bcrypt.compare(password, user.password);
+    // if password is matched then return success message otherwise return invalid credentials
+    if (!isPasswordMatched) {
+      throw new Error("Invalid credential");
+    } else {
+      res.send("Login successful");
+    }
+  } catch (err) {
+    res.status(400).send({ message: "Error in login", error: err.message });
+  }
+});
+
 // Sending all data to frontend
 app.get("/feed", async (req, res) => {
   try {
