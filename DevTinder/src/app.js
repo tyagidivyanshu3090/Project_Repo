@@ -3,6 +3,7 @@ const connectToDB = require("./config/database");
 const { checkAuth, userAuth } = require("./middleware/auth");
 const signUpValidation = require("./utilsOrHelperFolder/signUpValidation");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 const { UserModel } = require("./models/user");
 
@@ -11,6 +12,7 @@ const app = express(); //  Creating the instance of express server -> app server
 const PORT = 3000;
 
 app.use(express.json());
+app.use(cookieParser());
 
 // adding the user
 app.post("/signup", async (req, res) => {
@@ -60,11 +62,20 @@ app.post("/login", async (req, res) => {
     if (!isPasswordMatched) {
       throw new Error("Invalid credential");
     } else {
+      // Sending the cookie to the frontend
+      res.cookie("token", "Token_send_to_frontend");
       res.send("Login successful");
     }
   } catch (err) {
     res.status(400).send({ message: "Error in login", error: err.message });
   }
+});
+
+// Getting profile
+app.post("/profile", async (req, res) => {
+  const { token } = req.cookies;
+  console.log(token);
+  res.send("Reading the cookie");
 });
 
 // Sending all data to frontend
