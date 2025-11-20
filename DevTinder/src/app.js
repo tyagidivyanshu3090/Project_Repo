@@ -4,8 +4,11 @@ const { checkAuth, userAuth } = require("./middleware/auth");
 const signUpValidation = require("./utilsOrHelperFolder/signUpValidation");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
-
 const { UserModel } = require("./models/user");
+const {
+  createToken,
+  validateJwtToken,
+} = require("./utilsOrHelperFolder/jwtToken");
 
 const app = express(); //  Creating the instance of express server -> app server
 
@@ -50,7 +53,6 @@ app.post("/login", async (req, res) => {
   try {
     // Extracting the emailId and password from the request body
     const { emailId, password } = req.body;
-
     // checking the user in datase
     const user = await UserModel.findOne({ emailId: emailId });
     // if user exist then checking password with hashed password otherwise return invalid credentials
@@ -62,8 +64,11 @@ app.post("/login", async (req, res) => {
     if (!isPasswordMatched) {
       throw new Error("Invalid credential");
     } else {
+      // Creating the token
+      // const token = await jwt.sign({ _id: user._id }, "DevTinder@3090");
+      const token = await createToken({ _id: user._id });
       // Sending the cookie to the frontend
-      res.cookie("token", "Token_send_to_frontend");
+      res.cookie("token", token);
       res.send("Login successful");
     }
   } catch (err) {
@@ -73,9 +78,26 @@ app.post("/login", async (req, res) => {
 
 // Getting profile
 app.post("/profile", async (req, res) => {
-  const { token } = req.cookies;
-  console.log(token);
-  res.send("Reading the cookie");
+  try {
+    const { token } = req.cookies;
+    console.log(token);
+    if (!token) {
+      throw new Error("Invalid token");
+    }
+    // validating the token using jwt.verify
+    const decodedMessage = await validateJwtToken(token, "DevTinder@3090");
+    console.log(decodedMessage);
+    //  Destructuring the id
+    const { _id } = decodedMessage;
+    // Geting the user data
+    const user = await UserModel.findById(_id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    res.send(user);
+  } catch (err) {
+    res.status(400).send({ message: "Error in profile", error: err.message });
+  }
 });
 
 // Sending all data to frontend
