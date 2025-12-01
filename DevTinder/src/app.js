@@ -1,6 +1,6 @@
 const express = require("express");
 const connectToDB = require("./config/database");
-const { checkAuth } = require("./middleware/auth");
+const { userAuth } = require("./middleware/auth");
 const signUpValidation = require("./utilsOrHelperFolder/signUpValidation");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
@@ -71,7 +71,7 @@ app.post("/login", async (req, res) => {
 });
 
 // Getting profile
-app.post("/profile", checkAuth, async (req, res) => {
+app.post("/profile", userAuth, async (req, res) => {
   try {
     const user = req.user;
     res.send(user);
