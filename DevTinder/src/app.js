@@ -61,8 +61,10 @@ app.post("/login", async (req, res) => {
       // Creating the token
       // const token = await jwt.sign({ _id: user._id }, "DevTinder@3090");
       const token = await createToken({ _id: user._id });
-      // Sending the cookie to the frontend
-      res.cookie("token", token);
+      // Sending the cookie to the frontend with expiry time
+      res.cookie("token", token, {
+        expires: new Date(Date.now() + 8 * 3600000), // Example: Cookie expires in 8 hours
+      });
       res.send("Login successful");
     }
   } catch (err) {

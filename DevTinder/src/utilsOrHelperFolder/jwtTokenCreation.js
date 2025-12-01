@@ -4,7 +4,7 @@ const secretKey = "DevTinder@3090";
 
 // creating token
 const createToken = async (user) => {
-  return await jwt.sign(user, secretKey, { expiresIn: "1d" });
+  return await jwt.sign(user, secretKey, { expiresIn: "8h" });
   // const token = await jwt.sign({ _id: user._id }, "DevTinder@3090");
 };
 
