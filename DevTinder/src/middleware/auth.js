@@ -57,6 +57,9 @@ const userAuth = async (req, res, next) => {
   } catch (err) {
     // If ANY step above fails (token invalid, user not found, etc.),
     // we catch the error and send a 400 Bad Request response.
+    if (err.name === "TokenExpiredError") {
+        return res.status(401).send("Please login again! Session expired.");
+    }
     res.status(400).send("ERROR: " + err.message);
   }
 };
