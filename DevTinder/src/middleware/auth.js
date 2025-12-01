@@ -1,29 +1,14 @@
-// This function is our middleware. It has access to req, res, and next.
-const checkAuth = (req, res, next) => {
-  // In a real app, you'd get the token from the request headers
-  // For now, we'll keep it simple
-  const token = "xyz";
+// For checking the user authentication
 
-  // The corrected logic!
-  if (token !== "xyz") {
-    // If the token is invalid, stop here and send an error response.
-    return res.status(401).send("Unauthorized: Invalid token");
-  }
+// Step 1: Importing the jwt-web-token package which is used for creating the token
+const jwt = require("jsonwebtoken");
 
-  // If the token is valid, call next() to pass control to the actual route handler.
-  console.log("Authentication successful!");
-  next();
+// Step 2: Defining the secret key which is used for creating the token
+const secretKey = "DevTinder@3090";
+
+// Step 3: Creating the middleware function
+const checkAuth = async (token) => {
+  return await jwt.verify(token, secretKey);
 };
 
-// user Auth function
-
-const userAuth = (req, res, next) => {
-  const token = "xyz";
-  if (token !== "xyz") {
-    return res.status(401).send("Unauthorized user");
-  }
-  next();
-};
-
-// This line makes the function available to other files in our project.
-module.exports = { checkAuth, userAuth };
+module.exports = { checkAuth };

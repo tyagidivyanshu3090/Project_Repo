@@ -1,14 +1,11 @@
 const express = require("express");
 const connectToDB = require("./config/database");
-const { checkAuth, userAuth } = require("./middleware/auth");
+const { checkAuth } = require("./middleware/auth");
 const signUpValidation = require("./utilsOrHelperFolder/signUpValidation");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const { UserModel } = require("./models/user");
-const {
-  createToken,
-  validateJwtToken,
-} = require("./utilsOrHelperFolder/jwtToken");
+const { createToken } = require("./utilsOrHelperFolder/jwtTokenCreation");
 
 const app = express(); //  Creating the instance of express server -> app server
 
@@ -19,9 +16,6 @@ app.use(cookieParser());
 
 // adding the user
 app.post("/signup", async (req, res) => {
-  // Console loging the request -> body
-  console.log("the request body data send is -> ", req.body);
-
   try {
     // Validation of data
     signUpValidation(req);
@@ -85,7 +79,7 @@ app.post("/profile", async (req, res) => {
       throw new Error("Invalid token");
     }
     // validating the token using jwt.verify
-    const decodedMessage = await validateJwtToken(token, "DevTinder@3090");
+    const decodedMessage = await checkAuth(token);
     console.log(decodedMessage);
     //  Destructuring the id
     const { _id } = decodedMessage;
