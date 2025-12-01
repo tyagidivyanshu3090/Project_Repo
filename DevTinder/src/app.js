@@ -64,6 +64,8 @@ app.post("/login", async (req, res) => {
       // Sending the cookie to the frontend with expiry time
       res.cookie("token", token, {
         expires: new Date(Date.now() + 8 * 3600000), // Example: Cookie expires in 8 hours
+        httpOnly: true, // Prevent JavaScript access (Security against XSS)
+        // secure: true, // Only send over HTTPS (Security against Snooping). Currently commenting as we are in development mode. 
       });
       res.send("Login successful");
     }
