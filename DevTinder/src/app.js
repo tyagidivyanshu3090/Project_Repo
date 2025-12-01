@@ -71,23 +71,9 @@ app.post("/login", async (req, res) => {
 });
 
 // Getting profile
-app.post("/profile", async (req, res) => {
+app.post("/profile", checkAuth, async (req, res) => {
   try {
-    const { token } = req.cookies;
-    console.log(token);
-    if (!token) {
-      throw new Error("Invalid token");
-    }
-    // validating the token using jwt.verify
-    const decodedMessage = await checkAuth(token);
-    console.log(decodedMessage);
-    //  Destructuring the id
-    const { _id } = decodedMessage;
-    // Geting the user data
-    const user = await UserModel.findById(_id);
-    if (!user) {
-      throw new Error("User not found");
-    }
+    const user = req.user;
     res.send(user);
   } catch (err) {
     res.status(400).send({ message: "Error in profile", error: err.message });
