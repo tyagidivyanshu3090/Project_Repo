@@ -52,7 +52,8 @@ app.post("/login", async (req, res) => {
     if (!user) {
       throw new Error("Invalid credential");
     }
-    const isPasswordMatched = await bcrypt.compare(password, user.password);
+    // const isPasswordMatched = await bcrypt.compare(password, user.password);//
+    const isPasswordMatched = await user.comparePassword(password);
     // if password is matched then return success message otherwise return invalid credentials
     if (!isPasswordMatched) {
       throw new Error("Invalid credential");
