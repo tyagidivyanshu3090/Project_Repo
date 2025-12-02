@@ -5,7 +5,6 @@ const signUpValidation = require("./utilsOrHelperFolder/signUpValidation");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const { UserModel } = require("./models/user");
-const { createToken } = require("./utilsOrHelperFolder/jwtTokenCreation");
 
 const app = express(); //  Creating the instance of express server -> app server
 
@@ -58,14 +57,14 @@ app.post("/login", async (req, res) => {
     if (!isPasswordMatched) {
       throw new Error("Invalid credential");
     } else {
-      // Creating the token
-      // const token = await jwt.sign({ _id: user._id }, "DevTinder@3090");
-      const token = await createToken({ _id: user._id });
+      // Creating the token -> call the getJWT function on the isntance of the user which is extracted above -> const user = await UserModel.findOne({ emailId: emailId });
+      const token = await user.getJWT(); // Much cleaner!
+
       // Sending the cookie to the frontend with expiry time
       res.cookie("token", token, {
         expires: new Date(Date.now() + 8 * 3600000), // Example: Cookie expires in 8 hours
         httpOnly: true, // Prevent JavaScript access (Security against XSS)
-        // secure: true, // Only send over HTTPS (Security against Snooping). Currently commenting as we are in development mode. 
+        // secure: true, // Only send over HTTPS (Security against Snooping). Currently commenting as we are in development mode.
       });
       res.send("Login successful");
     }

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+
 const userSchema = new mongoose.Schema(
   {
     lastName: {
@@ -69,6 +71,18 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// We are attaching a method named 'getJWT' to the userSchema
+userSchema.methods.getJWT = async function () {
+  // 'this' refers to the specific user document calling this function
+  const user = this;
+  // Create the token
+  const token = await jwt.sign({ _id: user._id }, "DevTinder@3090", {
+    expiresIn: "7d",
+  });
+  // Return the token back to whoever called this function
+  return token;
+};
 
 const UserModel = mongoose.model("User", userSchema);
 
