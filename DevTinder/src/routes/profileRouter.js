@@ -1,6 +1,6 @@
 const express = require("express");
 const profileRouter = express.Router();
-const userAuth = require("../middlewares/userAuth");
+const { userAuth } = require("../middleware/auth");
 
 profileRouter.get("/profile", userAuth, async (req, res) => {
   try {
