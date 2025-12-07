@@ -25,16 +25,16 @@ profileRouter.patch("/edit", userAuth, async (req, res) => {
       throw new Error("Invalid data");
     }
     // 2. Dynamic Update (The "Patch" Logic)
-    const user = req.user;
+    const loggedInUser = req.user;
     Object.keys(req.body).forEach((key) => {
-      user[key] = req.body[key];
+      loggedInUser[key] = req.body[key];
     });
     // 3. Save to Database
-    await user.save();
+    await loggedInUser.save();
     // 4. Send Success Response
     res.json({
-      message: `${user.firstName}, your profile was updated successfully`,
-      data: user,
+      message: `${loggedInUser.firstName}, your profile was updated successfully`,
+      data: loggedInUser,
     });
   } catch (err) {
     res
