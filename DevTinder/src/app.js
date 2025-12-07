@@ -22,67 +22,6 @@ app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
 app.use("/connectionRequest", connectionRequestRouter);
 
-// adding the user
-// app.post("/signup", async (req, res) => {
-//   try {
-//     // Validation of data
-//     signUpValidation(req);
-
-//     // Encrypting the password
-//     const { firstName, lastName, emailId, password } = req.body;
-//     const passwordHash = await bcrypt.hash(password, 10);
-
-//     // Creating the instance of modal for saving data in database
-//     const user = new UserModel({
-//       firstName,
-//       lastName,
-//       emailId,
-//       password: passwordHash,
-//     });
-
-//     await user.save();
-//     res.send("Data saved to DB");
-//   } catch (err) {
-//     console.log(err);
-//     res
-//       .status(400)
-//       .send({ message: "Error in saving the data", error: err.message });
-//   }
-// });
-
-// // login api -> check emailId and password is correct or not
-// app.post("/login", async (req, res) => {
-//   try {
-//     // Extracting the emailId and password from the request body
-//     const { emailId, password } = req.body;
-//     // checking the user in datase
-//     const user = await UserModel.findOne({ emailId: emailId });
-//     // if user exist then checking password with hashed password otherwise return invalid credentials
-//     if (!user) {
-//       throw new Error("Invalid credential");
-//     }
-//     // const isPasswordMatched = await bcrypt.compare(password, user.password);//
-//     const isPasswordMatched = await user.comparePassword(password);
-//     // if password is matched then return success message otherwise return invalid credentials
-//     if (!isPasswordMatched) {
-//       throw new Error("Invalid credential");
-//     } else {
-//       // Creating the token -> call the getJWT function on the isntance of the user which is extracted above -> const user = await UserModel.findOne({ emailId: emailId });
-//       const token = await user.getJWT(); // Much cleaner!
-
-//       // Sending the cookie to the frontend with expiry time
-//       res.cookie("token", token, {
-//         expires: new Date(Date.now() + 8 * 3600000), // Example: Cookie expires in 8 hours
-//         httpOnly: true, // Prevent JavaScript access (Security against XSS)
-//         // secure: true, // Only send over HTTPS (Security against Snooping). Currently commenting as we are in development mode.
-//       });
-//       res.send("Login successful");
-//     }
-//   } catch (err) {
-//     res.status(400).send({ message: "Error in login", error: err.message });
-//   }
-// });
-
 // // Getting profile
 // app.post("/profile", userAuth, async (req, res) => {
 //   try {
