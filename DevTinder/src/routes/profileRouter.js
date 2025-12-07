@@ -2,7 +2,7 @@ const express = require("express");
 const profileRouter = express.Router();
 const { userAuth } = require("../middleware/auth");
 
-profileRouter.get("/profile", userAuth, async (req, res) => {
+profileRouter.get("/view", userAuth, async (req, res) => {
   try {
     // The data of the user is extracted in the userAuth middleware based on the token
     const user = req.user;
