@@ -22,17 +22,6 @@ app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
 app.use("/connectionRequest", connectionRequestRouter);
 
-// // Getting profile
-// app.post("/profile", userAuth, async (req, res) => {
-//   try {
-//     // Extracting the user data from the request which is added by the userAuth middleware
-//     const user = req.user;
-//     res.send(user);
-//   } catch (err) {
-//     res.status(400).send({ message: "Error in profile", error: err.message });
-//   }
-// });
-
 connectToDB()
   .then(() => {
     console.log("database connected");
