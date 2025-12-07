@@ -60,7 +60,8 @@ profileRouter.patch("/changepassword", userAuth, async (req, res) => {
     }
 
     const user = req.user;
-    const isPasswordMatched = await bcrypt.compare(oldPassword, user.password);
+    // const isPasswordMatched = await bcrypt.compare(oldPassword, user.password);
+    const isPasswordMatched = await user.comparePassword(oldPassword);
     if (!isPasswordMatched) {
       throw new Error("Invalid password");
     }
