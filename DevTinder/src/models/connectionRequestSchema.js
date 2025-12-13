@@ -31,3 +31,10 @@ const connectionRequestSchema = new mongoose.Schema(
   },
   { timestamps: true } // Adds createdAt and updatedAt
 );
+
+const ConnectionRequestModel1 = mongoose.model(
+  "ConnectionRequest",
+  connectionRequestSchema
+);
+
+module.exports = { ConnectionRequestModel };
