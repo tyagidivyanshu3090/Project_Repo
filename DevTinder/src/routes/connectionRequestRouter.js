@@ -1,9 +1,9 @@
 const express = require("express");
 const { userAuth } = require("../middleware/auth");
 const connectionRequestRouter = express.Router();
-const {
-  statusCheck,
-} = require("../utilsOrHelperFolder/validateStatusOfConnectionRequest");
+const statusCheck = require("../utilsOrHelperFolder/validateStatusOfConnectionRequest");
+
+const { ConnectionRequestModel } = require("../models/connectionRequestSchema");
 
 // api for sending the connection request
 connectionRequestRouter.post(
@@ -17,6 +17,7 @@ connectionRequestRouter.post(
       // validating the status which can be either interested or ignored.
       // The DB schema allows 4 statuses: ignored, interested, accepted, rejected. However, when sending a request, you should only be allowed to send "interested" or "ignored". You cannot force a request to be "accepted" immediately.
       const isStatusValid = statusCheck(status);
+
       if (!isStatusValid) {
         return res.status(400).send("Invalid status");
       }
@@ -33,11 +34,14 @@ connectionRequestRouter.post(
       });
       // Saving the connection request to the database
       const data = await connectionRequest.save();
+
       res.json({
         message: "Connection Request Sent Successfully",
         data: data,
       });
-    } catch (err) {}
+    } catch (err) {
+      res.status(500).send("Internal Server Error");
+    }
   }
 );
 
