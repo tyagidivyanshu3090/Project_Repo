@@ -19,7 +19,10 @@ connectionRequestRouter.post(
       const isStatusValid = statusCheck(status);
 
       if (!isStatusValid) {
-        return res.status(400).send("Invalid status");
+        return res.status(400).send({
+          message: "Invalid status",
+          statusSend: status,
+        });
       }
 
       //  _id is the user id of the user who sent the request: we get this id from the token
@@ -40,7 +43,9 @@ connectionRequestRouter.post(
         data: data,
       });
     } catch (err) {
-      res.status(500).send("Internal Server Error");
+      res.status(500).send({
+        error: err.message,
+      });
     }
   }
 );
