@@ -33,3 +33,10 @@ fs.writeFileSync("createdFile.txt", "Hello World", "utf-8");
 
 // fs.mkdirSync("createdDirectory");
 
+// ------------------------------------------------------
+
+// 4. rmdirSync: It is used to delete a directory.
+
+// fs.rmdirSync("createdDirectory");
+
+    
