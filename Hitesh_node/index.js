@@ -11,3 +11,25 @@ const fs = require("node:fs");
 // for creating a new file, we use writeFileSync method not createFileSync as it is not a built-in method. 
 
 fs.writeFileSync("createdFile.txt", "Hello World", "utf-8");
+
+
+//------------------------------------------------------
+
+// Other methods:
+
+// 1. appendFileSync: In this the content will be appended to the file, if the file does not exist then it will create a new file.
+
+// fs.appendFileSync("createdFile.txt", "Hello World", "utf-8");
+
+// ------------------------------------------------------
+
+// 2. unlinkSync: It is used to delete a file.
+
+// fs.unlinkSync("createdFile.txt");
+
+// ------------------------------------------------------
+
+// 3. mkdirSync: It is used to create a directory.
+
+// fs.mkdirSync("createdDirectory");
+
